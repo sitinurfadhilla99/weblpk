@@ -3,6 +3,16 @@ import pandas as pd
 import time
 
 # =========================================
+# SESSION STATE
+# =========================================
+
+if "rumus" not in st.session_state:
+    st.session_state.rumus = ""
+
+if "golongan" not in st.session_state:
+    st.session_state.golongan = ""
+
+# =========================================
 # KONFIGURASI HALAMAN
 # =========================================
 
@@ -14,13 +24,8 @@ st.set_page_config(
 
 st.title("🧪 Laboratorium Virtual Kimia Organik")
 
-st.write(
-    "Simulasi identifikasi senyawa organik "
-    "dan praktikum virtual interaktif."
-)
-
 # =========================================
-# INPUT STRUKTUR SENYAWA
+# INPUT STRUKTUR
 # =========================================
 
 st.header("🔬 Penyusun Struktur Senyawa")
@@ -130,13 +135,11 @@ if st.button("🧪 Buat Senyawa"):
 
     rumus = "-".join(rantai)
 
-    st.header("📌 Struktur Senyawa")
+    st.session_state.rumus = rumus
 
-    st.code(rumus)
-
-    # =========================================
+    # =====================================
     # IDENTIFIKASI GOLONGAN
-    # =========================================
+    # =====================================
 
     if "COOH" in rumus:
 
@@ -184,9 +187,20 @@ if st.button("🧪 Buat Senyawa"):
 
         golongan = "Hidrokarbon"
 
-    # =========================================
-    # TABEL INFORMASI
-    # =========================================
+    st.session_state.golongan = golongan
+
+# =========================================
+# TAMPILKAN SENYAWA
+# =========================================
+
+if st.session_state.rumus != "":
+
+    rumus = st.session_state.rumus
+    golongan = st.session_state.golongan
+
+    st.header("📌 Struktur Senyawa")
+
+    st.code(rumus)
 
     st.header("📊 Informasi Senyawa")
 
@@ -203,45 +217,34 @@ if st.button("🧪 Buat Senyawa"):
 
     st.table(data)
 
-    st.success(f"Senyawa termasuk {golongan}")
+    st.success(
+        f"Senyawa termasuk {golongan}"
+    )
 
-    # =========================================
+    # =====================================
     # PILIH UJI
-    # =========================================
+    # =====================================
 
     st.header("⚗️ Simulasi Praktikum")
 
     opsi_uji = [
 
-        # Alkohol
         "Lucas",
         "CrO3",
         "Asam Kromat",
         "Natrium",
         "Esterifikasi",
-
-        # Aldehid
         "Tollens",
         "Fehling",
         "Benedict",
         "Schiff",
-
-        # Keton
         "Iodoform",
         "2,4-DNP",
-
-        # Asam karboksilat
         "NaHCO3",
         "Lakmus",
-
-        # Alkena
         "Bromin",
         "KMnO4",
-
-        # Fenol
         "FeCl3",
-
-        # Amina
         "Hinsberg",
         "Karbilamina"
     ]
@@ -258,6 +261,10 @@ if st.button("🧪 Buat Senyawa"):
             "Dipanaskan"
         ]
     )
+
+    # =====================================
+    # JALANKAN UJI
+    # =====================================
 
     if st.button("▶️ Jalankan Uji"):
 
@@ -283,17 +290,11 @@ if st.button("🧪 Buat Senyawa"):
 
             progress.progress(i + 1)
 
-        # =========================================
+        # =================================
         # HASIL UJI
-        # =========================================
-
-        st.header("🔬 Hasil Pengamatan")
+        # =================================
 
         hasil = "Tidak ada perubahan"
-
-        # =====================================
-        # UJI ALKOHOL
-        # =====================================
 
         if uji == "Lucas":
 
@@ -309,245 +310,47 @@ if st.button("🧪 Buat Senyawa"):
 
                 hasil = "Larutan cepat keruh"
 
-        elif uji == "CrO3":
-
-            if "Primer" in golongan:
-
-                hasil = (
-                    "Warna oranye berubah hijau "
-                    "dan terbentuk asam karboksilat"
-                )
-
-            elif "Sekunder" in golongan:
-
-                hasil = (
-                    "Warna berubah hijau "
-                    "dan terbentuk keton"
-                )
-
-            elif "Tersier" in golongan:
-
-                hasil = "Tidak bereaksi"
-
-        elif uji == "Asam Kromat":
-
-            if "OH" in rumus:
-
-                hasil = (
-                    "Warna oranye berubah hijau"
-                )
-
-        elif uji == "Natrium":
-
-            if "OH" in rumus:
-
-                hasil = (
-                    "Terbentuk gelembung H2"
-                )
-
-        elif uji == "Esterifikasi":
-
-            if (
-                "OH" in rumus or
-                "COOH" in rumus
-            ):
-
-                hasil = "Tercium bau ester"
-
-        # =====================================
-        # UJI ALDEHID
-        # =====================================
-
         elif uji == "Tollens":
 
             if golongan == "Aldehid":
 
-                hasil = (
-                    "Terbentuk cermin perak"
-                )
-
-        elif uji == "Fehling":
-
-            if golongan == "Aldehid":
-
-                hasil = (
-                    "Endapan merah bata"
-                )
-
-        elif uji == "Benedict":
-
-            if golongan == "Aldehid":
-
-                hasil = (
-                    "Endapan merah"
-                )
-
-        elif uji == "Schiff":
-
-            if golongan == "Aldehid":
-
-                hasil = (
-                    "Larutan merah muda"
-                )
-
-        # =====================================
-        # UJI KETON
-        # =====================================
-
-        elif uji == "Iodoform":
-
-            if golongan == "Keton":
-
-                hasil = (
-                    "Endapan kuning"
-                )
-
-        elif uji == "2,4-DNP":
-
-            if golongan in [
-                "Keton",
-                "Aldehid"
-            ]:
-
-                hasil = (
-                    "Endapan oranye"
-                )
-
-        # =====================================
-        # UJI ASAM KARBOKSILAT
-        # =====================================
-
-        elif uji == "NaHCO3":
-
-            if golongan == "Asam Karboksilat":
-
-                hasil = (
-                    "Muncul gelembung CO2"
-                )
-
-        elif uji == "Lakmus":
-
-            if golongan == "Asam Karboksilat":
-
-                hasil = (
-                    "Lakmus biru "
-                    "menjadi merah"
-                )
-
-            elif golongan == "Amina":
-
-                hasil = (
-                    "Lakmus merah "
-                    "menjadi biru"
-                )
-
-        # =====================================
-        # UJI ALKENA
-        # =====================================
+                hasil = "Terbentuk cermin perak"
 
         elif uji == "Bromin":
 
             if "=" in rumus:
 
-                hasil = (
-                    "Warna bromin hilang"
-                )
+                hasil = "Warna bromin hilang"
 
-        elif uji == "KMnO4":
+        elif uji == "NaHCO3":
 
-            if "=" in rumus:
+            if golongan == "Asam Karboksilat":
 
-                hasil = (
-                    "Ungu menjadi coklat"
-                )
-
-        # =====================================
-        # UJI FENOL
-        # =====================================
+                hasil = "Muncul gelembung CO2"
 
         elif uji == "FeCl3":
 
             if "C6H5OH" in rumus:
 
-                hasil = (
-                    "Larutan ungu"
-                )
-
-        # =====================================
-        # UJI AMINA
-        # =====================================
-
-        elif uji == "Hinsberg":
-
-            if "NH2" in rumus:
-
-                hasil = (
-                    "Amina primer "
-                    "teridentifikasi"
-                )
-
-            elif "NH" in rumus:
-
-                hasil = (
-                    "Amina sekunder "
-                    "teridentifikasi"
-                )
-
-            elif "N" in rumus:
-
-                hasil = (
-                    "Amina tersier "
-                    "teridentifikasi"
-                )
+                hasil = "Larutan ungu"
 
         elif uji == "Karbilamina":
 
             if "NH2" in rumus:
 
-                hasil = (
-                    "Tercium bau menyengat"
-                )
+                hasil = "Bau menyengat"
 
-        # =========================================
-        # VISUAL HASIL
-        # =========================================
+        st.header("🔬 Hasil Pengamatan")
 
-        if (
-            "keruh" in hasil or
-            "Endapan" in hasil
-        ):
+        st.info(hasil)
 
-            st.warning(hasil)
-
-        elif (
-            "hijau" in hasil or
-            "ungu" in hasil or
-            "merah" in hasil
-        ):
-
-            st.success(hasil)
-
-        elif (
-            "Tidak" in hasil
-        ):
-
-            st.error(hasil)
-
-        else:
-
-            st.info(hasil)
-
-        # =========================================
+        # =================================
         # PERSAMAAN REAKSI
-        # =========================================
+        # =================================
 
         st.header("🧾 Persamaan Reaksi")
 
         reaksi = "Tidak ada reaksi"
-
-        # =====================================
-        # ALKOHOL
-        # =====================================
 
         if uji == "Lucas":
 
@@ -563,70 +366,6 @@ if st.button("🧪 Buat Senyawa"):
                     f"→ {produk} + H2O"
                 )
 
-        elif uji == "CrO3":
-
-            if "CH2(OH)" in rumus:
-
-                produk = rumus.replace(
-                    "CH2(OH)",
-                    "COOH"
-                )
-
-                reaksi = (
-                    f"{rumus} + CrO3 "
-                    f"→ {produk}"
-                )
-
-            elif "CH(OH)" in rumus:
-
-                produk = rumus.replace(
-                    "CH(OH)",
-                    "CO"
-                )
-
-                reaksi = (
-                    f"{rumus} + CrO3 "
-                    f"→ {produk}"
-                )
-
-            elif "C(OH)" in rumus:
-
-                reaksi = (
-                    "Alkohol tersier "
-                    "tidak teroksidasi"
-                )
-
-        elif uji == "Asam Kromat":
-
-            if "OH" in rumus:
-
-                reaksi = (
-                    f"{rumus} + H2CrO4 "
-                    f"→ produk oksidasi"
-                )
-
-        elif uji == "Natrium":
-
-            if "OH" in rumus:
-
-                reaksi = (
-                    f"{rumus} + Na "
-                    f"→ RONa + H2"
-                )
-
-        elif uji == "Esterifikasi":
-
-            if "OH" in rumus:
-
-                reaksi = (
-                    f"{rumus} + RCOOH "
-                    f"→ RCOOR + H2O"
-                )
-
-        # =====================================
-        # ALDEHID
-        # =====================================
-
         elif uji == "Tollens":
 
             if golongan == "Aldehid":
@@ -635,91 +374,6 @@ if st.button("🧪 Buat Senyawa"):
                     "RCHO + Ag2O "
                     "→ RCOOH + Ag"
                 )
-
-        elif uji == "Fehling":
-
-            if golongan == "Aldehid":
-
-                reaksi = (
-                    "RCHO + Cu2+ + OH− "
-                    "→ RCOO− + Cu2O"
-                )
-
-        elif uji == "Benedict":
-
-            if golongan == "Aldehid":
-
-                reaksi = (
-                    "RCHO + Cu2+ "
-                    "→ Cu2O"
-                )
-
-        elif uji == "Schiff":
-
-            if golongan == "Aldehid":
-
-                reaksi = (
-                    "RCHO + Pereaksi Schiff "
-                    "→ kompleks merah muda"
-                )
-
-        # =====================================
-        # KETON
-        # =====================================
-
-        elif uji == "Iodoform":
-
-            if golongan == "Keton":
-
-                reaksi = (
-                    "RCOCH3 + I2 + NaOH "
-                    "→ CHI3 + RCOONa"
-                )
-
-        elif uji == "2,4-DNP":
-
-            if golongan in [
-                "Keton",
-                "Aldehid"
-            ]:
-
-                reaksi = (
-                    "RCOR + 2,4-DNP "
-                    "→ hidrazon"
-                )
-
-        # =====================================
-        # ASAM KARBOKSILAT
-        # =====================================
-
-        elif uji == "NaHCO3":
-
-            if golongan == "Asam Karboksilat":
-
-                reaksi = (
-                    "RCOOH + NaHCO3 "
-                    "→ RCOONa + CO2 + H2O"
-                )
-
-        elif uji == "Lakmus":
-
-            if golongan == "Asam Karboksilat":
-
-                reaksi = (
-                    "Asam menghasilkan "
-                    "ion H+"
-                )
-
-            elif golongan == "Amina":
-
-                reaksi = (
-                    "Amina menghasilkan "
-                    "ion OH−"
-                )
-
-        # =====================================
-        # ALKENA
-        # =====================================
 
         elif uji == "Bromin":
 
@@ -730,18 +384,14 @@ if st.button("🧪 Buat Senyawa"):
                     "→ RCHBr-CHBrR"
                 )
 
-        elif uji == "KMnO4":
+        elif uji == "NaHCO3":
 
-            if "=" in rumus:
+            if golongan == "Asam Karboksilat":
 
                 reaksi = (
-                    "RCH=CHR + KMnO4 "
-                    "→ diol"
+                    "RCOOH + NaHCO3 "
+                    "→ RCOONa + CO2 + H2O"
                 )
-
-        # =====================================
-        # FENOL
-        # =====================================
 
         elif uji == "FeCl3":
 
@@ -750,26 +400,6 @@ if st.button("🧪 Buat Senyawa"):
                 reaksi = (
                     "Fenol + FeCl3 "
                     "→ kompleks ungu"
-                )
-
-        # =====================================
-        # AMINA
-        # =====================================
-
-        elif uji == "Hinsberg":
-
-            if "NH2" in rumus:
-
-                reaksi = (
-                    "RNH2 + C6H5SO2Cl "
-                    "→ sulfonamida"
-                )
-
-            elif "NH" in rumus:
-
-                reaksi = (
-                    "R2NH + C6H5SO2Cl "
-                    "→ sulfonamida"
                 )
 
         elif uji == "Karbilamina":
@@ -783,9 +413,9 @@ if st.button("🧪 Buat Senyawa"):
 
         st.code(reaksi)
 
-        # =========================================
+        # =================================
         # KESIMPULAN
-        # =========================================
+        # =================================
 
         st.header("📖 Kesimpulan")
 
