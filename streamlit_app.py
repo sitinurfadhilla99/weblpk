@@ -138,28 +138,42 @@ def render_tube(tinggi, warna_larutan, efek, warna_endapan=None):
         e_html = "<div class='bubble-fx' style='left:20px;'></div><div class='bubble-fx' style='left:50px; animation-delay:0.5s;'></div>"
     return f"<div class='tube-wrap'><div class='tube-glass'><div class='tube-liquid' style='height:{tinggi}; background:{warna_larutan};'>{e_html}</div></div></div>"
 
+# Kamus Penerjemah dari Nama Uji ke Nama Pereaksi Riil
+nama_zat_asli = {
+    "Uji Golongan Alkohol": "Ceric Ammonium Nitrate",
+    "Uji Oksidasi Alkohol": "Pereaksi Jones ($CrO_3 / H_2SO_4$)",
+    "Uji Golongan Alkohol Sekunder": "Pereaksi Lucas ($ZnCl_2$ + HCl pekat) + Panas",
+    "Uji Golongan Alkohol Tersier": "Pereaksi Lucas ($ZnCl_2$ + HCl pekat)",
+    "Uji Golongan Metil Keton / Metil Karbinol": "Uji Iodoform ($I_2$ / NaOH)",
+    "Uji Golongan Alkanal/Aldehida (Bisulfit)": "Larutan Na-Bisulfit ($NaHSO_3$)",
+    "Uji Reduksi Golongan Alkanal (Fehling)": "Pereaksi Fehling (A + B)",
+    "Uji Spesifik Golongan Alkanal (Schiff)": "Pereaksi Schiff",
+    "Uji Golongan Ester": "Hidroksilamin ($NH_2OH$) + $FeCl_3$",
+    "Uji Golongan Asam Karboksilat": "Uji Barit ($NaHCO_3$ + $Ba(OH)_2$)"
+}
+
 reagen_colors = {
-    "Ceric Nitrat":                  "#f97316",
-    "Pereaksi Jones":                "#f97316",
-    "Pereaksi Lucas":                "#f8fafc",
-    "Pereaksi Lucas (Panas)":        "#f8fafc",
-    "Na-Bisulfit":                   "#f8fafc",
-    "Pereaksi Fehling":              "#3b82f6",
-    "Pereaksi Schiff":               "#f8fafc",
-    "Uji Iodoform":                  "#f8fafc",
-    "Hidroksilamin (Uji Ester)":     "#f8fafc",
-    "Uji Barit (NaHCO3)":           "#f8fafc",
+    "Uji Golongan Alkohol":                  "#f97316", 
+    "Uji Oksidasi Alkohol":                  "#f97316", 
+    "Uji Golongan Alkohol Sekunder":         "#f8fafc", 
+    "Uji Golongan Alkohol Tersier":          "#f8fafc", 
+    "Uji Golongan Metil Keton / Metil Karbinol": "#f8fafc", 
+    "Uji Golongan Alkanal/Aldehida (Bisulfit)": "#f8fafc", 
+    "Uji Reduksi Golongan Alkanal (Fehling)":  "#3b82f6", 
+    "Uji Spesifik Golongan Alkanal (Schiff)":  "#f8fafc", 
+    "Uji Golongan Ester":                     "#f8fafc", 
+    "Uji Golongan Asam Karboksilat":           "#f8fafc", 
 }
 
 flowchart_paths = {
-    "Alkohol Primer": ["Ceric Nitrat", "Pereaksi Jones", "Pereaksi Lucas (Panas)"],
-    "Alkohol Sekunder": ["Ceric Nitrat", "Pereaksi Jones", "Pereaksi Lucas (Panas)", "Uji Iodoform"],
-    "Alkohol Tersier": ["Ceric Nitrat", "Pereaksi Jones", "Pereaksi Lucas"],
-    "Aldehida (Alkanal)": ["Ceric Nitrat", "Na-Bisulfit", "Pereaksi Fehling", "Pereaksi Schiff"],
-    "Keton (Alkanon)": ["Ceric Nitrat", "Na-Bisulfit", "Pereaksi Fehling", "Uji Iodoform"],
-    "Ester (Alkil Alkanoat)": ["Ceric Nitrat", "Na-Bisulfit", "Hidroksilamin (Uji Ester)"],
-    "Asam Karboksilat": ["Ceric Nitrat", "Na-Bisulfit", "Hidroksilamin (Uji Ester)", "Uji Barit (NaHCO3)"],
-    "Alkana / Hidrokarbon Jenuh": ["Ceric Nitrat", "Na-Bisulfit", "Hidroksilamin (Uji Ester)", "Uji Barit (NaHCO3)"]
+    "Alkohol Primer": ["Uji Golongan Alkohol", "Uji Oksidasi Alkohol", "Uji Golongan Alkohol Sekunder"],
+    "Alkohol Sekunder": ["Uji Golongan Alkohol", "Uji Oksidasi Alkohol", "Uji Golongan Alkohol Sekunder", "Uji Golongan Metil Keton / Metil Karbinol"],
+    "Alkohol Tersier": ["Uji Golongan Alkohol", "Uji Oksidasi Alkohol", "Uji Golongan Alkohol Tersier"],
+    "Aldehida (Alkanal)": ["Uji Golongan Alkohol", "Uji Golongan Alkanal/Aldehida (Bisulfit)", "Uji Reduksi Golongan Alkanal (Fehling)", "Uji Spesifik Golongan Alkanal (Schiff)"],
+    "Keton (Alkanon)": ["Uji Golongan Alkohol", "Uji Golongan Alkanal/Aldehida (Bisulfit)", "Uji Reduksi Golongan Alkanal (Fehling)", "Uji Golongan Metil Keton / Metil Karbinol"],
+    "Ester (Alkil Alkanoat)": ["Uji Golongan Alkohol", "Uji Golongan Alkanal/Aldehida (Bisulfit)", "Uji Golongan Ester"],
+    "Asam Karboksilat": ["Uji Golongan Alkohol", "Uji Golongan Alkanal/Aldehida (Bisulfit)", "Uji Golongan Ester", "Uji Golongan Asam Karboksilat"],
+    "Alkana / Hidrokarbon Jenuh": ["Uji Golongan Alkohol", "Uji Golongan Alkanal/Aldehida (Bisulfit)", "Uji Golongan Ester", "Uji Golongan Asam Karboksilat"]
 }
 
 database_reaksi = {
