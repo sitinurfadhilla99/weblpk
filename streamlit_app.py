@@ -164,19 +164,19 @@ flowchart_paths = {
 
 database_reaksi = {
     "Alkohol Primer": {
-        "Uji Golongan Alkohol": {
+        "Ceric Nitrat (Uji Golongan Alkohol)": {
             "hasil": "(+) Merah Ceri", 
             "reaksi": r"R-OH + [Ce(NO_3)_6]^{2-} \rightarrow [Ce(OR)(NO_3)_5]^{2-} + HNO_3", 
             "alasan": "Gugus -OH bebas bereaksi menggantikan ligan nitrat pada ion Cerium(IV) membentuk senyawa kompleks koordinasi berwarna merah ceri.", 
             "warna_akhir": "#ef4444", "efek": "none"
         },
-        "Uji Oksidasi Alkohol": {
+        "Pereaksi Jones (Uji Oksidasi Alkohol)": {
             "hasil": "(+) Hijau", 
             "reaksi": r"3\ R-CH_2OH + 2\ CrO_3 + 3\ H_2SO_4 \rightarrow 3\ R-CHO + Cr_2(SO_4)_3 + 6\ H_2O", 
             "alasan": "Memiliki atom hidrogen alfa. Gugus -OH dioksidasi menjadi aldehida, sedangkan Kromium(VI) jingga tereduksi menjadi Kromium(III) hijau.", 
             "warna_akhir": "#10b981", "efek": "none"
         },
-        "Uji Golongan Alkohol Sekunder": {
+        "Pereaksi Lucas (Panas) (Uji Golongan Alkohol Sekunder)": {
             "hasil": "(-) Tetap Jingga", 
             "reaksi": r"R-CH_2OH + HCl \xrightarrow{ZnCl_2} \text{Tidak ada reaksi}", 
             "alasan": "Karbokation primer sangat tidak stabil sehingga tidak mampu bereaksi dengan pereaksi Lucas pada suhu kamar.", 
@@ -184,13 +184,13 @@ database_reaksi = {
         }
     },
     "Alkohol Sekunder": {
-        "Uji Golongan Alkohol": {
+        "Ceric Nitrat (Uji Golongan Alkohol)": {
             "hasil": "(+) Merah Ceri", 
             "reaksi": r"R-OH + [Ce(NO_3)_6]^{2-} \rightarrow [Ce(OR)(NO_3)_5]^{2-} + HNO_3", 
             "alasan": "Ikatan koordinasi terbentuk antara atom oksigen pada gugus hidroksil sekunder dengan logam Cerium pusat.", 
             "warna_akhir": "#ef4444", "efek": "none"
         },
-        "Uji Oksidasi Alkohol": {
+        "Pereaksi Jones (Uji Oksidasi Alkohol)": {
             "hasil": "(+) Hijau", 
             "reaksi": r"3\ R_2CH-OH + 2\ CrO_3 + 3\ H_2SO_4 \rightarrow 3\ R_2C=O + Cr_2(SO_4)_3 + 6\ H_2O", 
             "alasan": "Alkohol sekunder dioksidasi menjadi keton, ditandai dengan perubahan warna larutan dari jingga ke hijau.", 
