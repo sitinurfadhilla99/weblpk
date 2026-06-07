@@ -139,16 +139,16 @@ def render_tube(tinggi, warna_larutan, efek, warna_endapan=None):
     return f"<div class='tube-wrap'><div class='tube-glass'><div class='tube-liquid' style='height:{tinggi}; background:{warna_larutan};'>{e_html}</div></div></div>"
 
 reagen_colors = {
-    "Uji Golongan Alkohol": "#f97316", 
-    "Uji Oksidasi Alkohol": "#f97316", 
-    "Uji Golongan Alkohol Tersier": "#f8fafc", 
-    "Uji Golongan Alkohol Sekunder": "#f8fafc", 
-    "Uji Golongan Alkanal/Aldehida (Bisulfit)": "#f8fafc", 
-    "Uji Reduksi Golongan Alkanal (Fehling)": "#3b82f6", 
-    "Uji Spesifik Golongan Alkanal (Schiff)": "#f8fafc",
-    "Uji Golongan Metil Keton / Metil Karbinol": "#f8fafc",
-    "Uji Golongan Ester": "#f8fafc",
-    "Uji Golongan Asam Karboksilat": "#f8fafc"
+    "Ceric Nitrat":                  "#f97316",
+    "Pereaksi Jones":                "#f97316",
+    "Pereaksi Lucas":                "#f8fafc",
+    "Pereaksi Lucas (Panas)":        "#f8fafc",
+    "Na-Bisulfit":                   "#f8fafc",
+    "Pereaksi Fehling":              "#3b82f6",
+    "Pereaksi Schiff":               "#f8fafc",
+    "Uji Iodoform":                  "#f8fafc",
+    "Hidroksilamin (Uji Ester)":     "#f8fafc",
+    "Uji Barit (NaHCO3)":           "#f8fafc",
 }
 
 flowchart_paths = {
