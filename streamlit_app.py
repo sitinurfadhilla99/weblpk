@@ -164,7 +164,7 @@ flowchart_paths = {
 
 database_reaksi = {
     "Alkohol Primer": {
-        "Uji Golongan Alkohol (Ceric Nitrat)": {
+        "Uji Golongan Alkohol": {
             "hasil": "(+) Merah Ceri", 
             "reaksi": r"R-OH + [Ce(NO_3)_6]^{2-} \rightarrow [Ce(OR)(NO_3)_5]^{2-} + HNO_3", 
             "alasan": "Gugus -OH bebas bereaksi menggantikan ligan nitrat pada ion Cerium(IV) membentuk senyawa kompleks koordinasi berwarna merah ceri.", 
